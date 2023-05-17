@@ -5,7 +5,7 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/wait.h>
-
+#include <stdbool.h>
 #define MAX_ARGS 20
 #define MAX_PROGS 10
 #define MAX_ARG_LENGTH 20
@@ -30,21 +30,21 @@ int main(){
 
 	token = strtok(input, " \n");
 
-	int is_name = 1;
+	bool is_name = true;
 
 	while(token != NULL)
 	{
 		if(strcmp(token, "|") == 0)
 		{
-			is_name = 1;
+			is_name = true;
 		}	
-		else if(is_name == 1)
+		else if(is_name)
 		{
 			strcpy(programs[num_programs], token);
 			num_programs++;
 			strcpy(args[num_programs-1][num_args[num_programs-1]], token);
-			num_args[num_programs-1]++;//first arg is prog name
-			is_name = 0;
+			num_args[num_programs-1]++;
+			is_name = false;
 		}
 		else
 		{
